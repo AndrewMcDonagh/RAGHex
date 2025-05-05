@@ -34,8 +34,8 @@ const MessageList = ({ messages, loading = false }: MessageListProps) => {
           <div
             className={`max-w-[85%] px-4 py-3 rounded-lg ${
               message.role === "user"
-                ? "bg-[#2A4B94] text-white rounded-tr-none"
-                : "bg-gray-100 text-gray-800 rounded-tl-none"
+                ? "bg-[#1EAEDB] text-white rounded-tr-none"
+                : "bg-[#F2FCE2] text-gray-800 rounded-tl-none"
             }`}
           >
             <p className="whitespace-pre-line">{message.content}</p>
@@ -48,7 +48,7 @@ const MessageList = ({ messages, loading = false }: MessageListProps) => {
       
       {loading && (
         <div className="flex justify-start">
-          <div className="max-w-[85%] px-4 py-3 rounded-lg bg-gray-100 text-gray-800 rounded-tl-none">
+          <div className="max-w-[85%] px-4 py-3 rounded-lg bg-[#F2FCE2] text-gray-800 rounded-tl-none">
             <div className="flex space-x-2 items-center">
               <div className="bg-gray-300 rounded-full h-2 w-2 animate-pulse-opacity"></div>
               <div className="bg-gray-300 rounded-full h-2 w-2 animate-pulse-opacity delay-150"></div>

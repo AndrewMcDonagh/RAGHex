@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import FileUploader from "./FileUploader";
@@ -7,7 +6,7 @@ import ChatInput from "./ChatInput";
 import MessageList, { MessageType } from "./MessageList";
 import { useToast } from "@/components/ui/use-toast";
 import { v4 as uuidv4 } from "uuid";
-import { Search, FileText, Hexagon } from "lucide-react";
+import { Search, FileText } from "lucide-react";
 
 const RAGContainer = () => {
   const [files, setFiles] = useState<File[]>([]);
@@ -100,82 +99,72 @@ const RAGContainer = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-[calc(100vh-2rem)] gap-6">
-      {/* Header for Mobile */}
-      <div className="md:hidden w-full text-center mb-2">
-        <div className="flex items-center justify-center mb-2">
-          <Hexagon className="h-5 w-5 text-[#2A4B94] mr-2" />
-          <h1 className="text-2xl font-bold text-[#2A4B94]">Hexagon RAG System</h1>
-        </div>
-      </div>
-
-      {/* Document Upload Panel - Made smaller and simpler */}
-      <div className="w-full md:w-1/4 lg:w-1/5 bg-white p-4 rounded-lg shadow-sm border overflow-y-auto">
-        <div className="hidden md:flex items-center mb-4">
-          <Hexagon className="h-4 w-4 text-[#2A4B94] mr-2" />
-          <h2 className="text-sm font-bold text-[#2A4B94]">Import Files</h2>
-        </div>
-        
-        <FileUploader onFilesUpload={handleFilesUpload} isLoading={isProcessing} />
-        
-        <DocumentList 
-          files={files} 
-          onRemoveFile={handleRemoveFile} 
-          isProcessing={isProcessing} 
-        />
-        
-        {files.length > 0 && !isReady && (
-          <Button 
-            onClick={processFiles} 
-            className="w-full mt-4 bg-[#2A4B94] hover:bg-[#1D355E]" 
-            disabled={isProcessing}
-          >
-            {isProcessing ? "Processing..." : "Process Documents"}
-          </Button>
+    <div className="w-full bg-white rounded-lg shadow-sm border p-6">
+      <h1 className="text-2xl font-bold text-[#1EAEDB] text-center mb-6">Hexagon RAG System</h1>
+      
+      <div className="grid grid-cols-1 gap-6">
+        {/* Files Section - Simplified and integrated */}
+        {!isReady && (
+          <div className="w-full mx-auto max-w-xl">
+            <h2 className="text-sm font-bold text-[#33C3F0] mb-2">Import Files</h2>
+            <FileUploader onFilesUpload={handleFilesUpload} isLoading={isProcessing} />
+            
+            <DocumentList 
+              files={files} 
+              onRemoveFile={handleRemoveFile} 
+              isProcessing={isProcessing} 
+            />
+            
+            {files.length > 0 && (
+              <Button 
+                onClick={processFiles} 
+                className="w-full mt-4 bg-[#1EAEDB] hover:bg-[#0FA0CE]" 
+                disabled={isProcessing}
+              >
+                {isProcessing ? "Processing..." : "Process Documents"}
+              </Button>
+            )}
+          </div>
         )}
-      </div>
 
-      {/* Chat Interface Panel - Centered and more prominent */}
-      <div className="w-full md:w-3/4 lg:w-4/5 flex flex-col bg-white p-6 rounded-lg shadow-sm border">
-        {/* Header with Hexagon Branding (Desktop only) */}
-        <div className="hidden md:flex items-center justify-center mb-6">
-          <Hexagon className="h-6 w-6 text-[#2A4B94] mr-2" />
-          <h1 className="text-2xl font-bold text-[#2A4B94]">Hexagon RAG System</h1>
-        </div>
-        
-        {isReady ? (
-          <div className="flex flex-col h-full">
+        {/* Chat Interface */}
+        <div className="w-full mx-auto max-w-3xl">
+          <div className="flex flex-col h-[calc(100vh-300px)]">
             <div className="flex-1 overflow-hidden">
-              {messages.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-center p-6">
-                  <div className="bg-[#2A4B94]/10 p-4 rounded-full mb-4">
-                    <Search className="h-8 w-8 text-[#2A4B94]" />
+              {isReady ? (
+                messages.length === 0 ? (
+                  <div className="h-full flex flex-col items-center justify-center text-center p-6">
+                    <div className="bg-[#F2FCE2] p-4 rounded-full mb-4">
+                      <Search className="h-8 w-8 text-[#1EAEDB]" />
+                    </div>
+                    <h3 className="text-xl font-semibold mb-2 text-[#1EAEDB]">Ask about your documents</h3>
+                    <p className="text-gray-500 max-w-md">
+                      Your documents have been processed. You can now ask questions about their content.
+                    </p>
                   </div>
-                  <h3 className="text-xl font-semibold mb-2">Ask about your documents</h3>
+                ) : (
+                  <MessageList messages={messages} loading={isAnswering} />
+                )
+              ) : (
+                <div className="h-full flex flex-col items-center justify-center text-center p-6">
+                  <div className="bg-[#F2FCE2] p-4 rounded-full mb-4">
+                    <FileText className="h-8 w-8 text-[#1EAEDB]" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2 text-[#1EAEDB]">No documents processed yet</h3>
                   <p className="text-gray-500 max-w-md">
-                    Your documents have been processed. You can now ask questions about their content.
+                    Upload and process documents to start asking questions about their content.
                   </p>
                 </div>
-              ) : (
-                <MessageList messages={messages} loading={isAnswering} />
               )}
             </div>
             
-            <div className="pt-4 border-t mt-auto">
-              <ChatInput onSend={handleSendMessage} disabled={isAnswering} />
-            </div>
+            {isReady && (
+              <div className="pt-4 border-t mt-auto">
+                <ChatInput onSend={handleSendMessage} disabled={isAnswering} />
+              </div>
+            )}
           </div>
-        ) : (
-          <div className="h-full flex flex-col items-center justify-center text-center p-6">
-            <div className="bg-gray-100 p-4 rounded-full mb-4">
-              <FileText className="h-8 w-8 text-[#2A4B94]" />
-            </div>
-            <h3 className="text-xl font-semibold mb-2">No documents processed yet</h3>
-            <p className="text-gray-500 max-w-md">
-              Upload and process documents to start asking questions about their content.
-            </p>
-          </div>
-        )}
+        </div>
         
         {/* Team attribution */}
         <div className="text-xs text-gray-400 text-center mt-4">
