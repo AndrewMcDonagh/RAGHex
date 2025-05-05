@@ -7,6 +7,7 @@ import ChatInput from "./ChatInput";
 import MessageList, { MessageType } from "./MessageList";
 import { useToast } from "@/components/ui/use-toast";
 import { v4 as uuidv4 } from "uuid";
+import { Search, FileText } from "lucide-react";
 
 const RAGContainer = () => {
   const [files, setFiles] = useState<File[]>([]);
