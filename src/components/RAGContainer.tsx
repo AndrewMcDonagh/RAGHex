@@ -100,7 +100,7 @@ const RAGContainer = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row w-full h-[calc(100vh-2rem)] gap-6">
+    <div className="flex flex-col w-full h-[calc(100vh-2rem)] gap-6">
       {/* Header for Mobile */}
       <div className="md:hidden w-full text-center mb-2">
         <div className="flex items-center justify-center mb-2">
