@@ -1,12 +1,18 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { Search } from "lucide-react";
+import RAGContainer from "@/components/RAGContainer";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-gray-50 p-4">
+      <header className="mb-6 text-center">
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-rag-purple to-rag-blue bg-clip-text text-transparent">Document Q&A System</h1>
+        <p className="text-gray-600 mt-2">Upload documents and ask questions to get AI-powered answers</p>
+      </header>
+      
+      <main className="container mx-auto">
+        <RAGContainer />
+      </main>
     </div>
   );
 };
