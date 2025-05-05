@@ -7,7 +7,7 @@ import ChatInput from "./ChatInput";
 import MessageList, { MessageType } from "./MessageList";
 import { useToast } from "@/components/ui/use-toast";
 import { v4 as uuidv4 } from "uuid";
-import { Search, FileText } from "lucide-react";
+import { Search, FileText, Hexagon } from "lucide-react";
 
 const RAGContainer = () => {
   const [files, setFiles] = useState<File[]>([]);
@@ -101,9 +101,21 @@ const RAGContainer = () => {
 
   return (
     <div className="flex flex-col md:flex-row w-full h-[calc(100vh-2rem)] gap-6">
-      {/* Document Upload Panel */}
-      <div className="w-full md:w-1/3 bg-white p-6 rounded-lg shadow-sm border overflow-y-auto">
-        <h2 className="text-xl font-bold mb-4">Document Import</h2>
+      {/* Header for Mobile */}
+      <div className="md:hidden w-full text-center mb-2">
+        <div className="flex items-center justify-center mb-2">
+          <Hexagon className="h-5 w-5 text-[#2A4B94] mr-2" />
+          <h1 className="text-2xl font-bold text-[#2A4B94]">Hexagon RAG System</h1>
+        </div>
+      </div>
+
+      {/* Document Upload Panel - Made smaller and simpler */}
+      <div className="w-full md:w-1/4 lg:w-1/5 bg-white p-4 rounded-lg shadow-sm border overflow-y-auto">
+        <div className="hidden md:flex items-center mb-4">
+          <Hexagon className="h-4 w-4 text-[#2A4B94] mr-2" />
+          <h2 className="text-sm font-bold text-[#2A4B94]">Import Files</h2>
+        </div>
+        
         <FileUploader onFilesUpload={handleFilesUpload} isLoading={isProcessing} />
         
         <DocumentList 
@@ -115,7 +127,7 @@ const RAGContainer = () => {
         {files.length > 0 && !isReady && (
           <Button 
             onClick={processFiles} 
-            className="w-full mt-4 bg-rag-purple hover:bg-rag-purple-dark" 
+            className="w-full mt-4 bg-[#2A4B94] hover:bg-[#1D355E]" 
             disabled={isProcessing}
           >
             {isProcessing ? "Processing..." : "Process Documents"}
@@ -123,17 +135,21 @@ const RAGContainer = () => {
         )}
       </div>
 
-      {/* Chat Interface Panel */}
-      <div className="w-full md:w-2/3 flex flex-col bg-white p-6 rounded-lg shadow-sm border">
-        <h2 className="text-xl font-bold mb-4">Ask Questions</h2>
+      {/* Chat Interface Panel - Centered and more prominent */}
+      <div className="w-full md:w-3/4 lg:w-4/5 flex flex-col bg-white p-6 rounded-lg shadow-sm border">
+        {/* Header with Hexagon Branding (Desktop only) */}
+        <div className="hidden md:flex items-center justify-center mb-6">
+          <Hexagon className="h-6 w-6 text-[#2A4B94] mr-2" />
+          <h1 className="text-2xl font-bold text-[#2A4B94]">Hexagon RAG System</h1>
+        </div>
         
         {isReady ? (
           <div className="flex flex-col h-full">
             <div className="flex-1 overflow-hidden">
               {messages.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-center p-6">
-                  <div className="bg-rag-blue/10 p-4 rounded-full mb-4">
-                    <Search className="h-8 w-8 text-rag-blue" />
+                  <div className="bg-[#2A4B94]/10 p-4 rounded-full mb-4">
+                    <Search className="h-8 w-8 text-[#2A4B94]" />
                   </div>
                   <h3 className="text-xl font-semibold mb-2">Ask about your documents</h3>
                   <p className="text-gray-500 max-w-md">
@@ -152,7 +168,7 @@ const RAGContainer = () => {
         ) : (
           <div className="h-full flex flex-col items-center justify-center text-center p-6">
             <div className="bg-gray-100 p-4 rounded-full mb-4">
-              <FileText className="h-8 w-8 text-gray-400" />
+              <FileText className="h-8 w-8 text-[#2A4B94]" />
             </div>
             <h3 className="text-xl font-semibold mb-2">No documents processed yet</h3>
             <p className="text-gray-500 max-w-md">
@@ -160,6 +176,11 @@ const RAGContainer = () => {
             </p>
           </div>
         )}
+        
+        {/* Team attribution */}
+        <div className="text-xs text-gray-400 text-center mt-4">
+          <p>Built by Reed Ramirez, Andrew McDonagh, Scott Cheung, and Ibrahima Ka</p>
+        </div>
       </div>
     </div>
   );

@@ -34,12 +34,12 @@ const MessageList = ({ messages, loading = false }: MessageListProps) => {
           <div
             className={`max-w-[85%] px-4 py-3 rounded-lg ${
               message.role === "user"
-                ? "bg-rag-purple text-white rounded-tr-none"
+                ? "bg-[#2A4B94] text-white rounded-tr-none"
                 : "bg-gray-100 text-gray-800 rounded-tl-none"
             }`}
           >
             <p className="whitespace-pre-line">{message.content}</p>
-            <div className={`text-xs mt-1 ${message.role === "user" ? "text-rag-purple-light/80" : "text-gray-500"}`}>
+            <div className={`text-xs mt-1 ${message.role === "user" ? "text-blue-200/80" : "text-gray-500"}`}>
               {message.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
             </div>
           </div>
